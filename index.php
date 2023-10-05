@@ -1,26 +1,17 @@
 <?php
-// Include config file
-include 'config.php';
+// Array of sample text strings
+$textArray = [
+    "Hello, world!",
+    "How are you today?",
+    "It's a beautiful day!",
+    "Goodbye!",
+    "Have a nice day!",
+    "Random text here."
+];
 
-// SQL query to fetch data
-$sql = "SELECT id, name, price FROM products";
-$result = $connect->query($sql);
+// Generate a random index
+$randomIndex = array_rand($textArray);
 
-// Begin HTML table
-echo "<table border='1'>";
-echo "<tr><th>ID</th><th>Name</th><th>Price</th></tr>";
-
-if ($result->num_rows > 0) {
-    // Output data of each row
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr><td>" . $row["id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["price"] . "</td></tr>";
-    }
-} else {
-    echo "<tr><td colspan='3'>0 results</td></tr>";
-}
-// End HTML table
-echo "</table>";
-
-// Close connection
-$connect->close();
+// Display the random text
+echo $textArray[$randomIndex];
 ?>
