@@ -1,17 +1,27 @@
 <?php
 //error_reporting(0);
 if(isset($_POST['signup'])) {
+    $fs_name = $_POST['firstname'];
+    $ls_name = $_POST['lastname'];
     $fname = $_POST['fullname'];
     $email = $_POST['emailid'];
-    $mobile = $_POST['mobileno'];
     $password = md5($_POST['password']);
-    $sql = "INSERT INTO  tblusers(FullName,EmailId,ContactNo,Password) VALUES(:fname,:email,:mobile,:password)";
+    $home_mobile = $_POST['home_mobile'];
+    $mobile = $_POST['mobileno'];
+    echo "Hi";
+    $sql = "INSERT INTO  tblusers(FirstName, LastName, FullName, EmailId, ContactNo, HomePhoneNo, Password) VALUES(:fs_name,:ls_name,:fname,:email,:mobile,:home_mobile,:password)";
     $query = $dbh->prepare($sql);
+    $query->bindParam(':fs_name', $fs_name, PDO::PARAM_STR);
+    $query->bindParam(':ls_name', $ls_name, PDO::PARAM_STR);
     $query->bindParam(':fname', $fname, PDO::PARAM_STR);
     $query->bindParam(':email', $email, PDO::PARAM_STR);
+    $query->bindParam(':password', $password, PDO::PARAM_STR);
+    $query->bindParam(':home_mobile', $home_mobile, PDO::PARAM_STR);
     $query->bindParam(':mobile', $mobile, PDO::PARAM_STR);
     $query->bindParam(':password', $password, PDO::PARAM_STR);
     $query->execute();
+    echo "Hi2";
+
     $lastInsertId = $dbh->lastInsertId();
     if($lastInsertId) {
         echo "<script>alert('Registration successfull. Now you can login');</script>";
@@ -46,7 +56,7 @@ return false;
 return true;
 }
 </script>
-<div class="modal fade" id="signupform">
+<div class="modal fade" id="signupform" class="modal fade" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -58,11 +68,14 @@ return true;
           <div class="signup_wrap">
             <div class="col-md-12 col-sm-6">
               <form  method="post" name="signup" onSubmit="return valid();">
-                <div class="form-group">
-                  <input type="text" class="form-control" name="fullname" placeholder="Full Name" required="required">
+              <div class="form-group">
+                  <input type="text" class="form-control" name="firstname" placeholder="First Name" required="required">
                 </div>
-                      <div class="form-group">
-                  <input type="text" class="form-control" name="mobileno" placeholder="Mobile Number" maxlength="10" required="required">
+                <div class="form-group">
+                  <input type="text" class="form-control" name="lastname" placeholder="Last Name" required="required">
+                </div>                
+              <div class="form-group">
+                  <input type="text" class="form-control" name="fullname" placeholder="Full Name" required="required">
                 </div>
                 <div class="form-group">
                   <input type="email" class="form-control" name="emailid" id="emailid" onBlur="checkAvailability()" placeholder="Email Address" required="required">
@@ -73,6 +86,12 @@ return true;
                 </div>
                 <div class="form-group">
                   <input type="password" class="form-control" name="confirmpassword" placeholder="Confirm Password" required="required">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="home_mobile" placeholder="Home Phone Number" maxlength="10" required="required">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="mobileno" placeholder="Mobile Number" maxlength="10" required="required">
                 </div>
                 <div class="form-group checkbox">
                   <input type="checkbox" id="terms_agree" required="required" checked="">

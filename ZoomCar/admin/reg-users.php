@@ -60,6 +60,19 @@ if(strlen($_SESSION['alogin']) == 0) {
 			<div class="container-fluid">				<div class="row">
 					<div class="col-md-12">						<h2 class="page-title">Registered Users</h2>						<!-- Zero Configuration Table -->
 						<div class="panel panel-default">
+						<!-- Create a div container to hold both forms -->
+						<div class="button-container" style="display: flex;">
+							<!-- First form for adding a user -->
+							<form action="add-user.php" method="post" style="margin-right: 10px;">
+								<input class="btn btn-primary" type="submit" name="adduser" value="Add User">
+							</form>
+
+							<!-- Second form for searching a user -->
+							<!-- You need to update the action to the appropriate script that handles the search -->
+							<form action="search-user.php" method="get">
+								<input class="btn btn-primary" type="submit" name="searchuser" value="Search User">
+							</form>
+						</div>
 							<div class="panel-heading">Reg Users</div>
 							<div class="panel-body">
 							<?php if($error) {?><div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } elseif($msg) {?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php }?>
